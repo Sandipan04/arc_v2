@@ -1,0 +1,12 @@
+name = "archive-pages"
+compatibility_date = "2026-06-05"
+pages_build_output_dir = "."
+
+[[d1_databases]]
+binding = "DB"
+database_name = "archive-db"
+database_id = "60215316-ee01-4094-a52a-e3ed35d2f34a"
+
+[[r2_buckets]]
+binding = "BUCKET"
+bucket_name = "niser-archive-files"

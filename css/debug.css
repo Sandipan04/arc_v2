@@ -1,0 +1,26 @@
+body {
+    background-color: #f4f6f8; /* Softer background for admin pages */
+}
+
+/* Styling for the JSON output block */
+pre {
+    background-color: #282c34;
+    color: #abb2bf;
+    padding: 15px;
+    border-radius: 6px;
+    font-size: 13px;
+    overflow-x: auto;
+    border: 1px solid #1e2227;
+    margin-bottom: 0;
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* Code tags inside the table */
+td code {
+    color: #d63384;
+    font-size: 0.9em;
+}
+
+.card {
+    border-radius: 8px;
+}

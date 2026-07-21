@@ -1,0 +1,280 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Course Details | NISER Archive</title>
+        <link
+            href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
+            rel="stylesheet"
+        />
+        <link rel="stylesheet" href="./css/global.css" />
+        <link rel="stylesheet" href="./css/sidebar.css" />
+        <style>
+            .iteration-card {
+                transition:
+                    transform 0.2s,
+                    box-shadow 0.2s;
+            }
+            .iteration-card:hover {
+                transform: translateY(-3px);
+                box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+            }
+        </style>
+    </head>
+    <body>
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark fixed-top">
+            <div class="container">
+                <a class="navbar-brand" href="/">NISER Archive</a>
+                <div class="d-flex align-items-center ms-auto">
+                    <button
+                        id="sign-in-btn"
+                        class="btn btn-outline-light btn-sm me-3 hidden"
+                    >
+                        Sign In
+                    </button>
+                    <div id="user-button-mount"></div>
+                </div>
+            </div>
+        </nav>
+
+        <div class="container-fluid" style="margin-top: 56px">
+            <!-- Mobile Toggle Button (Visible only on small screens) -->
+            <div
+                class="d-md-none py-2 border-bottom bg-white sticky-top"
+                style="top: 56px; z-index: 1020"
+            >
+                <button
+                    class="btn btn-light w-100 d-flex justify-content-between align-items-center"
+                    type="button"
+                    data-bs-toggle="offcanvas"
+                    data-bs-target="#sidebarMenu"
+                    aria-controls="sidebarMenu"
+                >
+                    <span class="fw-bold text-muted">📁 Browse Directory</span>
+                    <span>☰</span>
+                </button>
+            </div>
+
+            <div class="row">
+                <!-- Responsive Sidebar: Acts as an offcanvas drawer on mobile, and a standard column on desktop -->
+                <nav
+                    class="col-md-3 col-lg-2 offcanvas-md offcanvas-start sidebar-container"
+                    tabindex="-1"
+                    id="sidebarMenu"
+                    aria-labelledby="sidebarMenuLabel"
+                >
+                    <div class="offcanvas-header d-md-none border-bottom">
+                        <h5
+                            class="offcanvas-title fw-bold text-primary"
+                            id="sidebarMenuLabel"
+                        >
+                            Archive Directory
+                        </h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="offcanvas"
+                            data-bs-target="#sidebarMenu"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="offcanvas-body flex-column pt-md-0">
+                        <h6
+                            class="d-none d-md-block text-muted fw-bold text-uppercase mb-3 px-2"
+                        >
+                            Directory
+                        </h6>
+                        <div id="sidebar-mount" class="w-100"></div>
+                    </div>
+                </nav>
+
+                <!-- Main Content Column -->
+                <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4 py-4 mb-5">
+                    <!-- Breadcrumbs, Headers, and Course Grid go here -->
+                    <nav aria-label="breadcrumb" class="mb-4">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item">
+                                <a href="/" class="text-decoration-none"
+                                    >Home</a
+                                >
+                            </li>
+                            <li class="breadcrumb-item">
+                                <a
+                                    href="#"
+                                    id="school-link"
+                                    class="text-decoration-none"
+                                    >School</a
+                                >
+                            </li>
+                            <li
+                                class="breadcrumb-item active"
+                                aria-current="page"
+                                id="breadcrumb-course"
+                            >
+                                Course
+                            </li>
+                        </ol>
+                    </nav>
+
+                    <div
+                        class="p-4 mb-4 bg-light rounded-3 shadow-sm border d-flex justify-content-between align-items-center"
+                    >
+                        <div>
+                            <div class="d-flex align-items-center gap-3">
+                                <h1
+                                    id="course-code"
+                                    class="display-6 fw-bold mb-0 text-primary"
+                                >
+                                    Loading...
+                                </h1>
+                                <span
+                                    id="course-status-badge"
+                                    class="badge bg-warning text-dark hidden"
+                                    >🟡 Under Review</span
+                                >
+                            </div>
+                            <p
+                                id="course-name"
+                                class="fs-5 text-muted mt-1 mb-0"
+                            >
+                                Please wait while we fetch course resources.
+                            </p>
+                        </div>
+                        <div>
+                            <button
+                                id="open-iteration-modal-btn"
+                                class="btn btn-success hidden"
+                                data-bs-toggle="modal"
+                                data-bs-target="#iterationModal"
+                            >
+                                ➕ Add Iteration
+                            </button>
+                        </div>
+                    </div>
+
+                    <h3 class="mb-3">Course Iterations</h3>
+                    <div id="loading-spinner" class="text-center py-5">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Loading...</span>
+                        </div>
+                    </div>
+
+                    <div
+                        id="iterations-container"
+                        class="d-flex flex-column gap-3"
+                    ></div>
+
+                    <div id="empty-state" class="text-center py-5 hidden">
+                        <p class="text-muted fs-5">
+                            No iterations created for this course yet.
+                        </p>
+                    </div>
+
+                    <!-- Comments Mount Point -->
+                    <div id="comments-mount"></div>
+                </main>
+            </div>
+        </div>
+
+        <!-- Add Iteration Modal -->
+        <div
+            class="modal fade"
+            id="iterationModal"
+            tabindex="-1"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title">Create New Iteration</h5>
+                        <button
+                            type="button"
+                            class="btn-close"
+                            data-bs-dismiss="modal"
+                            aria-label="Close"
+                        ></button>
+                    </div>
+                    <div class="modal-body">
+                        <div
+                            id="iteration-error"
+                            class="alert alert-danger hidden"
+                        ></div>
+                        <form id="iteration-form">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold"
+                                        >Year *</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        id="iter-year"
+                                        required
+                                    >
+                                        <option value="" disabled selected>
+                                            Select...
+                                        </option>
+                                        <option value="2026">2026</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2024">2024</option>
+                                        <option value="2023">2023</option>
+                                        <option value="2022">2022</option>
+                                        <option value="2021">2021</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label class="form-label fw-semibold"
+                                        >Semester *</label
+                                    >
+                                    <select
+                                        class="form-select"
+                                        id="iter-sem"
+                                        required
+                                    >
+                                        <option value="" disabled selected>
+                                            Select...
+                                        </option>
+                                        <option value="Odd">Odd</option>
+                                        <option value="Even">Even</option>
+                                        <option value="Summer">Summer</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold"
+                                    >Instructor (Optional)</label
+                                >
+                                <input
+                                    type="text"
+                                    class="form-control"
+                                    id="iter-inst"
+                                    placeholder="e.g. Dr. Kamal Lochan Patra"
+                                />
+                            </div>
+                            <div class="d-grid">
+                                <button
+                                    type="submit"
+                                    class="btn btn-primary"
+                                    id="submit-iter-btn"
+                                >
+                                    Create Iteration
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+        <script type="module" src="./js/course.js"></script>
+        <script type="module">
+            import { mountSidebar } from "./js/sidebar.js";
+            import "./js/course.js"; // Your existing script
+
+            document.addEventListener("DOMContentLoaded", () => {
+                mountSidebar("sidebar-mount");
+            });
+        </script>
+    </body>
+</html>

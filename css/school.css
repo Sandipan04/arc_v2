@@ -1,0 +1,25 @@
+.course-card {
+    cursor: pointer;
+    transition: all 0.2s ease;
+    border: 1px solid #e9ecef;
+}
+
+.course-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1) !important;
+    border-color: #0d6efd;
+}
+
+.course-card .card-title {
+    font-weight: 700;
+    margin-bottom: 0.5rem;
+}
+
+.breadcrumb a {
+    text-decoration: none;
+    color: #0d6efd;
+}
+
+.breadcrumb a:hover {
+    text-decoration: underline;
+}

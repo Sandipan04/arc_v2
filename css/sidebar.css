@@ -1,0 +1,91 @@
+/* Sidebar Container */
+.sidebar-container {
+    background-color: #f8f9fa;
+    border-right: 1px solid #e9ecef;
+    padding: 1.5rem 1rem;
+}
+
+@media (min-width: 768px) {
+    .sidebar-container {
+        min-height: calc(100vh - 56px); /* Full height on desktop */
+        position: sticky;
+        top: 56px;
+        overflow-y: auto;
+    }
+}
+
+/* Tree Structure */
+.directory-tree {
+    font-size: 0.9rem;
+    user-select: none;
+}
+
+/* Native Details/Summary Reset */
+.directory-tree details summary {
+    cursor: pointer;
+    list-style: none;
+    display: flex;
+    align-items: center;
+    padding: 0.4rem 0.5rem;
+    border-radius: 6px;
+    transition: background-color 0.15s ease;
+    margin-bottom: 2px;
+}
+
+.directory-tree details summary::-webkit-details-marker {
+    display: none;
+}
+
+.directory-tree details summary:hover {
+    background-color: #e9ecef;
+}
+
+/* Custom Arrow Alignment */
+.directory-tree details summary::before {
+    content: "▶";
+    font-size: 0.55rem;
+    color: #adb5bd;
+    margin-right: 0.6rem;
+    transition: transform 0.15s ease-in-out;
+    display: inline-block;
+    width: 10px;
+    text-align: center;
+}
+
+.directory-tree details[open] > summary::before {
+    transform: rotate(90deg);
+}
+
+/* Hide arrow for items without children (e.g., iterations) */
+.directory-tree .no-children summary::before {
+    content: "";
+}
+
+/* Branch Lines */
+.tree-branch {
+    padding-left: 0.5rem;
+    margin-left: 0.75rem;
+    border-left: 1px solid #dee2e6;
+    margin-top: 0.1rem;
+    margin-bottom: 0.3rem;
+}
+
+/* Links */
+.tree-link {
+    text-decoration: none;
+    color: inherit;
+    flex-grow: 1; /* Makes the whole row clickable */
+    display: block;
+}
+
+.tree-link:hover {
+    color: #0d6efd !important;
+}
+
+/* Active State */
+.tree-link.text-primary {
+    background-color: #e7f1ff;
+    padding: 0.2rem 0.4rem;
+    margin: -0.2rem -0.4rem;
+    border-radius: 4px;
+}
