@@ -1,0 +1,358 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - NISER Archive</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="/css/global.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark mb-4">
+        <div class="container">
+            <a class="navbar-brand" href="/">NISER Archive</a>
+            <div class="d-flex" id="user-menu"></div>
+        </div>
+    </nav>
+
+    <div class="container mb-5" style="max-width: 1100px;">
+        <h2 class="mb-4 fw-bold">My Profile</h2>
+
+        <ul class="nav nav-tabs" id="profileTabs" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active fw-semibold" id="public-tab" data-bs-toggle="tab" data-bs-target="#public-profile" type="button" role="tab">Public Profile</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link fw-semibold" id="account-tab" data-bs-toggle="tab" data-bs-target="#account-settings" type="button" role="tab">Account Settings</button>
+            </li>
+        </ul>
+
+        <div class="tab-content bg-white p-4 border border-top-0 rounded-bottom shadow-sm">
+            <div class="tab-pane fade show active" id="public-profile" role="tabpanel">
+                <div id="loading-spinner" class="text-center py-5">
+                    <div class="spinner-border text-primary" role="status"></div>
+                    <p class="mt-2 text-muted">Loading profile...</p>
+                </div>
+
+                <form id="profile-form" style="display: none;">
+                    <div class="row">
+                        <!-- Left Column: Avatar Playground -->
+                        <div class="col-md-5 d-flex flex-column mb-4 mb-md-0 border-end pe-md-4">
+                            <h5 class="fw-bold mb-3">Avatar Playground</h5>
+
+                            <!-- Avatar Preview -->
+                            <div class="d-flex justify-content-center mb-4">
+                                <div class="bg-light rounded-circle overflow-hidden shadow-sm" style="width: 220px; height: 220px; border: 4px solid #dee2e6;">
+                                    <img id="avatar-preview" src="" alt="Avatar Preview" class="w-100 h-100" style="object-fit: cover;">
+                                </div>
+                            </div>
+
+                            <!-- Accordion Options -->
+                            <div class="accordion accordion-flush border" id="avatarAccordion">
+
+                                <!-- Colors -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseColors">
+                                            Base Colors
+                                        </button>
+                                    </h2>
+                                    <div id="collapseColors" class="accordion-collapse collapse" data-bs-parent="#avatarAccordion">
+                                        <div class="accordion-body row gx-2 py-2">
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Background</label>
+                                                <input type="color" id="av-bg-color" class="form-control form-control-color w-100 avatar-input" value="#b6e3f4">
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Skin Tone</label>
+                                                <input type="color" id="av-skin-color" class="form-control form-control-color w-100 avatar-input" value="#edb98a">
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Hair Color</label>
+                                                <input type="color" id="av-hair-color" class="form-control form-control-color w-100 avatar-input" value="#2c1b18">
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Hat Color</label>
+                                                <input type="color" id="av-hat-color" class="form-control form-control-color w-100 avatar-input" value="#262e33">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Head & Hair -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseHair">
+                                            Hair & Headwear
+                                        </button>
+                                    </h2>
+                                    <div id="collapseHair" class="accordion-collapse collapse show" data-bs-parent="#avatarAccordion">
+                                        <div class="accordion-body py-2">
+                                            <label class="form-label small mb-1">Style</label>
+                                            <select id="av-top" class="form-select form-select-sm avatar-input">
+                                                <optgroup label="Short Hair">
+                                                    <option value="shortFlat">Short Flat</option>
+                                                    <option value="shortRound">Short Round</option>
+                                                    <option value="shortCurly">Short Curly</option>
+                                                    <option value="shortWaved">Short Waved</option>
+                                                    <option value="shavedSides">Shaved Sides</option>
+                                                    <option value="sides">Sides Only</option>
+                                                    <option value="theCaesar">The Caesar</option>
+                                                    <option value="theCaesarAndSidePart">Caesar & Side Part</option>
+                                                </optgroup>
+                                                <optgroup label="Long / Styled Hair">
+                                                    <option value="longButNotTooLong">Long But Not Too Long</option>
+                                                    <option value="straight01">Straight 1</option>
+                                                    <option value="straight02">Straight 2</option>
+                                                    <option value="straightAndStrand">Straight & Strand</option>
+                                                    <option value="bigHair">Big Hair</option>
+                                                    <option value="bob">Bob</option>
+                                                    <option value="bun">Bun</option>
+                                                    <option value="curly">Curly</option>
+                                                    <option value="curvy">Curvy</option>
+                                                    <option value="dreads">Dreads</option>
+                                                    <option value="dreads01">Dreads 1</option>
+                                                    <option value="dreads02">Dreads 2</option>
+                                                    <option value="frida">Frida</option>
+                                                    <option value="frizzle">Frizzle</option>
+                                                    <option value="fro">Afro</option>
+                                                    <option value="froBand">Afro Band</option>
+                                                    <option value="miaWallace">Mia Wallace</option>
+                                                    <option value="shaggy">Shaggy</option>
+                                                    <option value="shaggyMullet">Shaggy Mullet</option>
+                                                </optgroup>
+                                                <optgroup label="Headwear">
+                                                    <option value="hat">Hat</option>
+                                                    <option value="hijab">Hijab</option>
+                                                    <option value="turban">Turban</option>
+                                                    <option value="winterHat1">Winter Hat 1</option>
+                                                    <option value="winterHat02">Winter Hat 2</option>
+                                                    <option value="winterHat03">Winter Hat 3</option>
+                                                    <option value="winterHat04">Winter Hat 4</option>
+                                                </optgroup>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Face -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFace">
+                                            Face & Expressions
+                                        </button>
+                                    </h2>
+                                    <div id="collapseFace" class="accordion-collapse collapse" data-bs-parent="#avatarAccordion">
+                                        <div class="accordion-body row gx-2 py-2">
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Eyes</label>
+                                                <select id="av-eyes" class="form-select form-select-sm avatar-input">
+                                                    <option value="default">Default</option>
+                                                    <option value="happy">Happy</option>
+                                                    <option value="wink">Wink</option>
+                                                    <option value="winkWacky">Wink Wacky</option>
+                                                    <option value="surprised">Surprised</option>
+                                                    <option value="squint">Squint</option>
+                                                    <option value="cry">Cry</option>
+                                                    <option value="eyeRoll">Eye Roll</option>
+                                                    <option value="hearts">Hearts</option>
+                                                    <option value="closed">Closed</option>
+                                                    <option value="side">Side</option>
+                                                    <option value="xDizzy">X Dizzy</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Mouth</label>
+                                                <select id="av-mouth" class="form-select form-select-sm avatar-input">
+                                                    <option value="default">Default</option>
+                                                    <option value="smile">Smile</option>
+                                                    <option value="twinkle">Twinkle</option>
+                                                    <option value="tongue">Tongue</option>
+                                                    <option value="eating">Eating</option>
+                                                    <option value="serious">Serious</option>
+                                                    <option value="sad">Sad</option>
+                                                    <option value="concerned">Concerned</option>
+                                                    <option value="disbelief">Disbelief</option>
+                                                    <option value="grimace">Grimace</option>
+                                                    <option value="screamOpen">Scream Open</option>
+                                                    <option value="vomit">Vomit</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label small mb-1">Eyebrows</label>
+                                                <select id="av-eyebrows" class="form-select form-select-sm avatar-input">
+                                                    <option value="default">Default</option>
+                                                    <option value="defaultNatural">Default Natural</option>
+                                                    <option value="flatNatural">Flat Natural</option>
+                                                    <option value="raisedExcited">Raised Excited</option>
+                                                    <option value="raisedExcitedNatural">Raised Excited Natural</option>
+                                                    <option value="sadConcerned">Sad Concerned</option>
+                                                    <option value="sadConcernedNatural">Sad Concerned Natural</option>
+                                                    <option value="unibrowNatural">Unibrow Natural</option>
+                                                    <option value="upDown">Up Down</option>
+                                                    <option value="upDownNatural">Up Down Natural</option>
+                                                    <option value="angry">Angry</option>
+                                                    <option value="angryNatural">Angry Natural</option>
+                                                    <option value="frownNatural">Frown Natural</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Facial Hair & Accessories -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseAcc">
+                                            Facial Hair & Accessories
+                                        </button>
+                                    </h2>
+                                    <div id="collapseAcc" class="accordion-collapse collapse" data-bs-parent="#avatarAccordion">
+                                        <div class="accordion-body row gx-2 py-2">
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Facial Hair</label>
+                                                <select id="av-facial-hair" class="form-select form-select-sm avatar-input">
+                                                    <option value="">None</option>
+                                                    <option value="beardLight">Light Beard</option>
+                                                    <option value="beardMedium">Medium Beard</option>
+                                                    <option value="beardMajestic">Majestic Beard</option>
+                                                    <option value="moustacheFancy">Fancy Moustache</option>
+                                                    <option value="moustacheMagnum">Magnum Moustache</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Beard Color</label>
+                                                <input type="color" id="av-facial-color" class="form-control form-control-color w-100 avatar-input" value="#2c1b18">
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Accessories</label>
+                                                <select id="av-acc" class="form-select form-select-sm avatar-input">
+                                                    <option value="">None</option>
+                                                    <option value="prescription01">Prescription 1</option>
+                                                    <option value="prescription02">Prescription 2</option>
+                                                    <option value="round">Round</option>
+                                                    <option value="sunglasses">Sunglasses</option>
+                                                    <option value="wayfarers">Wayfarers</option>
+                                                    <option value="kurt">Kurt</option>
+                                                    <option value="eyepatch">Eyepatch</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Frame Color</label>
+                                                <input type="color" id="av-acc-color" class="form-control form-control-color w-100 avatar-input" value="#262e33">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Clothing -->
+                                <div class="accordion-item">
+                                    <h2 class="accordion-header">
+                                        <button class="accordion-button collapsed py-2 fw-semibold" type="button" data-bs-toggle="collapse" data-bs-target="#collapseClothes">
+                                            Clothing
+                                        </button>
+                                    </h2>
+                                    <div id="collapseClothes" class="accordion-collapse collapse" data-bs-parent="#avatarAccordion">
+                                        <div class="accordion-body row gx-2 py-2">
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Outfit</label>
+                                                <select id="av-clothes" class="form-select form-select-sm avatar-input">
+                                                    <option value="shirtCrewNeck">Crew Neck</option>
+                                                    <option value="shirtVNeck">V-Neck</option>
+                                                    <option value="shirtScoopNeck">Scoop Neck</option>
+                                                    <option value="graphicShirt">Graphic Shirt</option>
+                                                    <option value="hoodie">Hoodie</option>
+                                                    <option value="blazerAndShirt">Blazer & Shirt</option>
+                                                    <option value="blazerAndSweater">Blazer & Sweater</option>
+                                                    <option value="collarAndSweater">Collar & Sweater</option>
+                                                    <option value="overall">Overalls</option>
+                                                </select>
+                                            </div>
+                                            <div class="col-6 mb-2">
+                                                <label class="form-label small mb-1">Fabric Color</label>
+                                                <input type="color" id="av-clothes-color" class="form-control form-control-color w-100 avatar-input" value="#25557c">
+                                            </div>
+                                            <div class="col-12">
+                                                <label class="form-label small mb-1">Graphic (If Graphic Shirt)</label>
+                                                <select id="av-clothes-graphic" class="form-select form-select-sm avatar-input">
+                                                    <option value="bat">Bat</option>
+                                                    <option value="bear">Bear</option>
+                                                    <option value="cumbia">Cumbia</option>
+                                                    <option value="deer">Deer</option>
+                                                    <option value="diamond">Diamond</option>
+                                                    <option value="hola">Hola</option>
+                                                    <option value="pizza">Pizza</option>
+                                                    <option value="resist">Resist</option>
+                                                    <option value="skull">Skull</option>
+                                                    <option value="skullOutline">Skull Outline</option>
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- Right Column: Personal Details -->
+                        <div class="col-md-7 ps-md-4 mt-4 mt-md-0">
+                            <h5 class="fw-bold mb-3">Personal Details</h5>
+
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Display Name</label>
+                                <input type="text" id="profile-name" class="form-control" required placeholder="How you will appear to others">
+                            </div>
+
+                            <div class="row mb-3 gx-3">
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">School</label>
+                                    <select id="profile-school" class="form-select">
+                                        <option value="">Select...</option>
+                                        <option value="SBS">SBS</option>
+                                        <option value="SCS">SCS</option>
+                                        <option value="SCoS">SCoS</option>
+                                        <option value="SMS">SMS</option>
+                                        <option value="SPS">SPS</option>
+                                        <option value="SHSS">SHSS</option>
+                                        <option value="SEPS">SEPS</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Program</label>
+                                    <input type="text" id="profile-program" class="form-control" placeholder="e.g. Int. MSc">
+                                </div>
+                                <div class="col-md-4">
+                                    <label class="form-label fw-semibold">Batch</label>
+                                    <input type="number" id="profile-batch" class="form-control" placeholder="e.g. 2021">
+                                </div>
+                            </div>
+
+                            <div class="mb-4">
+                                <label class="form-label fw-semibold">About Me</label>
+                                <textarea id="profile-about" class="form-control" rows="5" placeholder="Share your academic interests, research focus, or hobbies..."></textarea>
+                            </div>
+
+                            <div class="d-flex justify-content-end">
+                                <button type="submit" class="btn btn-primary px-4 fw-bold" id="save-profile-btn">
+                                    Save Profile
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+
+            <div class="tab-pane fade" id="account-settings" role="tabpanel">
+                <div class="d-flex justify-content-center py-4">
+                    <div id="clerk-user-profile-container"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script type="module" src="/js/profile.js"></script>
+</body>
+</html>
