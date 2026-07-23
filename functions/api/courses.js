@@ -4,26 +4,26 @@ export async function onRequestGet(context) {
   try {
     const { request, env } = context;
     const url = new URL(request.url);
-    const schoolAbbr = url.searchParams.get("school");
+    const schoolParam = url.searchParams.get("school");
 
-    if (!schoolAbbr) {
+    if (!schoolParam) {
       return Response.json(
-        { error: "School abbreviation is required" },
+        { error: "School parameter is required" },
         { status: 400 },
       );
     }
 
-    // Fetch courses for this specific school by joining the schools table
+    // Fetch courses by matching either the abbreviation or the ID
     const { results } = await env.DB.prepare(
       `
             SELECT courses.*
             FROM courses
             JOIN schools ON courses.school_id = schools.id
-            WHERE schools.abbr = ?
+            WHERE schools.abbr = ? OR schools.id = ?
             ORDER BY courses.code ASC
         `,
     )
-      .bind(schoolAbbr.toUpperCase())
+      .bind(schoolParam.toUpperCase(), schoolParam.toLowerCase())
       .all();
 
     return Response.json({ success: true, courses: results });
@@ -55,13 +55,14 @@ export async function onRequestPost(context) {
       );
     }
 
-    // 1. Resolve the school_id from the abbreviation
-    const school = await env.DB.prepare("SELECT id FROM schools WHERE abbr = ?")
-      .bind(school_abbr.toUpperCase())
+    // 1. Resolve the school_id by matching either the abbreviation or the ID
+    const school = await env.DB.prepare("SELECT id FROM schools WHERE abbr = ? OR id = ?")
+      .bind(school_abbr.toUpperCase(), school_abbr.toLowerCase())
       .first();
+
     if (!school) {
       return Response.json(
-        { error: "Invalid school abbreviation." },
+        { error: "Invalid school abbreviation or ID." },
         { status: 400 },
       );
     }
